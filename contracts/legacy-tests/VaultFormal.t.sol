@@ -2,8 +2,8 @@
 pragma solidity ^0.8.19;
 
 import "forge-std/Test.sol";
-import "../src/Vault.sol";
-import "../src/MockERC20.sol";
+import "../../src/Vault.sol";
+import "../../src/MockERC20.sol";
 
 /**
  * @title VaultFormalSpec

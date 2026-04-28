@@ -2,8 +2,8 @@
 pragma solidity ^0.8.19;
 
 import {Test} from "forge-std/Test.sol";
-import {Vault} from "../src/Vault.sol";
-import {MockERC20} from "../src/MockERC20.sol";
+import {Vault} from "../../src/Vault.sol";
+import {MockERC20} from "../../src/MockERC20.sol";
 
 /**
  * @title VaultStatefulFuzzTest

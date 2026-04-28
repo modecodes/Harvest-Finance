@@ -7,7 +7,6 @@ import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol"
 import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
-import "./interfaces/IVault.sol";
 import "./interfaces/IOracle.sol";
 import "./libraries/VaultLib.sol";
 
@@ -16,7 +15,7 @@ import "./libraries/VaultLib.sol";
  * @dev ERC4626-like vault implementing IVault. Upgradeable via UUPS.
  * Includes withdrawal rate limiting per block.
  */
-contract Vault is Initializable, IVault, ERC20Upgradeable, AccessControlUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable {
+contract Vault is Initializable, ERC20Upgradeable, AccessControlUpgradeable, ReentrancyGuardUpgradeable, UUPSUpgradeable {
     using SafeERC20Upgradeable for IERC20Upgradeable;
     using VaultLib for uint256;
 
@@ -42,6 +41,10 @@ contract Vault is Initializable, IVault, ERC20Upgradeable, AccessControlUpgradea
     error StaleOraclePrice();
     error PriceDeviationExceeded(uint256 oraclePrice, uint256 expectedPrice, uint256 maxSlippageBps);
     error MaxGasPriceExceeded(uint256 gasPrice, uint256 maxGasPrice);
+
+    // Events (previously inherited from IVault)
+    event Deposit(address indexed caller, address indexed owner, uint256 assets, uint256 shares);
+    event Withdraw(address indexed caller, address indexed receiver, address indexed owner, uint256 assets, uint256 shares);
 
     // Roles
     bytes32 public constant ADMIN_ROLE  = keccak256("ADMIN_ROLE");

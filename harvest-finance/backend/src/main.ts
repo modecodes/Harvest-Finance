@@ -1,4 +1,4 @@
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, VERSION_NEUTRAL, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { IoAdapter } from '@nestjs/platform-socket.io';
@@ -8,6 +8,7 @@ import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { ThrottlerExceptionFilter } from './common/filters/throttler-exception.filter';
 import { SorobanExceptionFilter } from './common/filters/soroban-exception.filter';
 import { CustomLoggerService } from './logger/custom-logger.service';
+import { VersioningInterceptor } from './common/interceptors/versioning.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {

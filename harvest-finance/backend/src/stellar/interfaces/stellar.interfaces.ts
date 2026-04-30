@@ -94,6 +94,16 @@ export interface FeeEstimate {
     estimatedTotalFee: string;
     feePerOperation: string;
     currentNetworkFee: number;
+    cheapFeeSuggestion: {
+        stroops: number;
+        xlm: string;
+        percentile: number;
+    };
+    fastFeeSuggestion: {
+        stroops: number;
+        xlm: string;
+        percentile: number;
+    };
 }
 
 export interface AccountInfo {

@@ -711,25 +711,50 @@ export class StellarService implements OnModuleInit {
     // ─────────────────────────────────────────────────────────────────────────────
 
     async estimateFee(operationCount = 1): Promise<FeeEstimate> {
+        const safeOperationCount = Math.max(1, operationCount);
         try {
-        const feeStats = await this.server.feeStats();
-        const baseFeeStroops = parseInt(feeStats.fee_charged.mode, 10);
-        const totalStroops = baseFeeStroops * operationCount;
+            const feeStats = await this.server.feeStats();
+            const chargedStats = feeStats.fee_charged as any;
+            const baseFeeStroops = parseInt(chargedStats.mode, 10);
+            const totalStroops = baseFeeStroops * safeOperationCount;
 
-        return {
-            baseFee: this.stroopsToXlm(baseFeeStroops),
-            estimatedTotalFee: this.stroopsToXlm(totalStroops),
-            feePerOperation: this.stroopsToXlm(baseFeeStroops),
-            currentNetworkFee: baseFeeStroops,
-        };
+            const cheapStroops = parseInt(chargedStats.p20, 10);
+            const fastStroops = parseInt(chargedStats.p90, 10);
+
+            return {
+                baseFee: this.stroopsToXlm(baseFeeStroops),
+                estimatedTotalFee: this.stroopsToXlm(totalStroops),
+                feePerOperation: this.stroopsToXlm(baseFeeStroops),
+                currentNetworkFee: baseFeeStroops,
+                cheapFeeSuggestion: {
+                    stroops: cheapStroops,
+                    xlm: this.stroopsToXlm(cheapStroops),
+                    percentile: 20,
+                },
+                fastFeeSuggestion: {
+                    stroops: fastStroops,
+                    xlm: this.stroopsToXlm(fastStroops),
+                    percentile: 90,
+                },
+            };
         } catch (err) {
-        this.logger.warn('Could not fetch fee stats, using default 100 stroops');
-        return {
-            baseFee: this.stroopsToXlm(100),
-            estimatedTotalFee: this.stroopsToXlm(100 * operationCount),
-            feePerOperation: this.stroopsToXlm(100),
-            currentNetworkFee: 100,
-        };
+            this.logger.warn('Could not fetch fee stats, using default 100 stroops');
+            return {
+                baseFee: this.stroopsToXlm(100),
+                estimatedTotalFee: this.stroopsToXlm(100 * safeOperationCount),
+                feePerOperation: this.stroopsToXlm(100),
+                currentNetworkFee: 100,
+                cheapFeeSuggestion: {
+                    stroops: 100,
+                    xlm: this.stroopsToXlm(100),
+                    percentile: 20,
+                },
+                fastFeeSuggestion: {
+                    stroops: 250,
+                    xlm: this.stroopsToXlm(250),
+                    percentile: 90,
+                },
+            };
         }
     }
 

@@ -6,7 +6,10 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 @ApiTags('state-sync')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
-@Controller('api/v1/state-sync')
+@Controller({
+  path: 'state-sync',
+  version: '1',
+})
 export class StateSyncController {
   constructor(private readonly stateSyncService: StateSyncService) {}
 

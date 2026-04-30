@@ -20,7 +20,10 @@ import {
 @ApiTags('Yield Analytics')
 @ApiBearerAuth('JWT-auth')
 @UseGuards(JwtAuthGuard)
-@Controller('api/v1/yield-analytics')
+@Controller({
+  path: 'yield-analytics',
+  version: '1',
+})
 export class YieldAnalyticsController {
   constructor(private readonly yieldAnalyticsService: YieldAnalyticsService) {}
 

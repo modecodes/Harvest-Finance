@@ -28,7 +28,10 @@ import {
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiTags('Vaults')
-@Controller('api/v1/vaults')
+@Controller({
+  path: 'vaults',
+  version: '1',
+})
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
 export class VaultsController {
@@ -100,6 +103,12 @@ export class VaultsController {
     return this.vaultsService.getPublicVaults();
   }
 
+  @Get('metadata')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Get vault metadata (names, symbols, asset pairs)' })
+  @ApiResponse({ status: 200, description: 'Vault metadata retrieved successfully' })
+  async getVaultsMetadata(): Promise<any[]> {
+    return this.vaultsService.getVaultsMetadata();
   @Get('apy-history')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Get APY history for vaults' })

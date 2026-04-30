@@ -3,12 +3,11 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  Entity,
+  UpdateDateColumn,
   Index,
   JoinColumn,
   ManyToOne,
-  JoinColumn,
-  Index,
+  OneToMany,
 } from 'typeorm';
 import { User } from './user.entity';
 import { Deposit } from './deposit.entity';
@@ -50,6 +49,12 @@ export class Vault {
 
   @Column({ type: 'text', nullable: true })
   description: string | null;
+
+  @Column({ length: 20, default: 'HVF' })
+  symbol: string;
+
+  @Column({ name: 'asset_pair', length: 50, default: 'XLM/USDC' })
+  assetPair: string;
 
   @Column({ type: 'decimal', precision: 18, scale: 8, default: 0 })
   totalDeposits: number;

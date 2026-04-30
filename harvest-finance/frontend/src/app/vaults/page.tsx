@@ -11,6 +11,8 @@ import { VaultTable } from "@/components/dashboard/VaultTable";
 import { WithdrawModal } from "@/components/dashboard/WithdrawModal";
 import { Footer } from "@/components/landing/Footer";
 import { Header } from "@/components/landing/Header";
+import { useQuery } from "@tanstack/react-query";
+import apiClient from "@/lib/api-client";
 import { useMilestones } from "@/hooks/useMilestones";
 import { calculateProgress, getAchievedMilestones } from "@/lib/milestones";
 import { formatCurrency, formatPercentage } from "@/lib/vault-utils";
@@ -133,7 +135,6 @@ function VaultWithProgress({
 export default function VaultsPage() {
   const { t } = useTranslation();
   const [selectedVault, setSelectedVault] = useState<Vault | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [isDepositOpen, setIsDepositOpen] = useState(false);
   const [isWithdrawOpen, setIsWithdrawOpen] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
@@ -147,6 +148,15 @@ export default function VaultsPage() {
       return map;
     },
   );
+
+  const { data: vaults = [], isLoading } = useQuery<Vault[]>({
+    queryKey: ["vaults"],
+    queryFn: async () => {
+      const response = await apiClient.get("/api/v1/vaults/public");
+      return response.data;
+    },
+    initialData: MOCK_VAULTS,
+  });
 
   const vault1Milestones = useMilestones({
     vaultId: "1",
@@ -173,13 +183,13 @@ export default function VaultsPage() {
   };
 
   const handleDepositClick = (vaultId: string) => {
-    const vault = MOCK_VAULTS.find((item) => item.id === vaultId) || null;
+    const vault = vaults.find((item) => item.id === vaultId) || null;
     setSelectedVault(vault);
     setIsDepositOpen(true);
   };
 
   const handleWithdrawClick = (vaultId: string) => {
-    const vault = MOCK_VAULTS.find((item) => item.id === vaultId) || null;
+    const vault = vaults.find((item) => item.id === vaultId) || null;
     setSelectedVault(vault);
     setIsWithdrawOpen(true);
   };
@@ -202,22 +212,18 @@ export default function VaultsPage() {
     [vaultBalances, milestoneHooks],
   );
 
-
-  useEffect(() => {
-    const t = setTimeout(() => setIsLoading(false), 1000);
-    return () => clearTimeout(t);
-  }, []);
-
-  const vaultsWithBalances = MOCK_VAULTS.map((vault) => {
-    const balanceNum = vaultBalances[vault.id] ?? 0;
-    return {
-      ...vault,
-      balance: balanceNum.toFixed(2),
-      projections: {
-        progressPercentage: calculateProgress(balanceNum, vault.seasonalTarget),
-      },
-    };
-  });
+  const vaultsWithBalances = useMemo(() => {
+    return vaults.map((vault) => {
+      const balanceNum = vaultBalances[vault.id] ?? 0;
+      return {
+        ...vault,
+        balance: balanceNum.toFixed(2),
+        projections: {
+          progressPercentage: calculateProgress(balanceNum, vault.seasonalTarget || 10000),
+        },
+      };
+    });
+  }, [vaults, vaultBalances]);
 
 
   return (

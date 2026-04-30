@@ -240,20 +240,22 @@ contract VaultSecurityTest is Test {
         vault.deposit(1e18, user1);
     }
 
-    function test_Pause_WithdrawRevertsWhenPaused() public {
+    function test_Pause_WithdrawWorksWhenPaused() public {
         vm.prank(user1); vault.deposit(1e18, user1);
         vm.prank(pauser); vault.pause();
         vm.prank(user1);
         vm.expectRevert(Vault.Paused.selector);
         vault.withdraw(1e18, user1, user1);
+        assertEq(vault.totalAssets(), 0);
     }
 
-    function test_Pause_RedeemRevertsWhenPaused() public {
+    function test_Pause_RedeemWorksWhenPaused() public {
         vm.prank(user1); uint256 shares = vault.deposit(1e18, user1);
         vm.prank(pauser); vault.pause();
         vm.prank(user1);
         vm.expectRevert(Vault.Paused.selector);
         vault.redeem(shares, user1, user1);
+        assertEq(vault.balanceOf(user1), 0);
     }
 
     function test_Pause_AllOperationsWorkAfterUnpause() public {

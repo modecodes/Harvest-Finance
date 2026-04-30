@@ -1,1 +1,1 @@
-export { Skeleton, VaultCardSkeleton, VaultTableRowSkeleton, TransactionRowSkeleton, MetricCardSkeleton } from './Skeleton';
+export * from './Skeleton';

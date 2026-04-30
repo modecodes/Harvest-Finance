@@ -97,3 +97,114 @@ export function MetricCardSkeleton() {
     </div>
   );
 }
+
+export function DashboardSkeleton() {
+  return (
+    <div className="space-y-12 pb-20 animate-pulse">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-8 border-b border-gray-100 dark:border-white/5">
+        <div className="space-y-4">
+          <Skeleton className="h-4 w-32" />
+          <Skeleton className="h-16 w-64" />
+          <Skeleton className="h-4 w-96" />
+        </div>
+        <Skeleton className="h-14 w-40 rounded-2xl" />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {Array.from({ length: 4 }).map((_, i) => (
+          <div key={i} className="rounded-2xl border border-gray-100 bg-white p-6 flex flex-col gap-4">
+            <div className="flex justify-between items-start">
+              <Skeleton className="w-12 h-12 rounded-2xl" />
+              <Skeleton className="h-4 w-12 rounded-full" />
+            </div>
+            <div className="space-y-2">
+              <Skeleton className="h-3 w-24" />
+              <Skeleton className="h-8 w-32" />
+              <Skeleton className="h-3 w-20" />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-3">
+        <div className="lg:col-span-2 rounded-2xl border border-gray-100 bg-white p-8 h-[450px] flex flex-col gap-6">
+          <div className="flex justify-between items-center">
+            <div className="space-y-2">
+              <Skeleton className="h-3 w-24" />
+              <Skeleton className="h-6 w-48" />
+            </div>
+            <div className="flex gap-2">
+              {Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} className="h-8 w-10 rounded-lg" />)}
+            </div>
+          </div>
+          <Skeleton className="flex-1 w-full rounded-xl" />
+        </div>
+        <div className="rounded-2xl border border-gray-100 bg-white p-8 space-y-6">
+          <div className="flex justify-between items-center">
+            <div className="space-y-2">
+              <Skeleton className="h-3 w-20" />
+              <Skeleton className="h-6 w-32" />
+            </div>
+            <Skeleton className="h-8 w-24 rounded-xl" />
+          </div>
+          <div className="space-y-4">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="flex justify-between items-center">
+                <div className="flex items-center gap-4">
+                  <Skeleton className="w-10 h-10 rounded-xl" />
+                  <div className="space-y-2">
+                    <Skeleton className="h-4 w-24" />
+                    <Skeleton className="h-3 w-16" />
+                  </div>
+                </div>
+                <div className="space-y-2 flex flex-col items-end">
+                  <Skeleton className="h-4 w-12" />
+                  <Skeleton className="h-3 w-16" />
+                </div>
+              </div>
+            ))}
+          </div>
+          <Skeleton className="h-32 w-full rounded-[2rem]" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function ModalSkeleton() {
+  return (
+    <div className="p-6 space-y-8 animate-pulse">
+      <Skeleton className="h-[180px] w-full rounded-[2.5rem]" />
+      <div className="space-y-4">
+        <div className="flex justify-between">
+          <Skeleton className="h-4 w-32" />
+          <Skeleton className="h-8 w-24 rounded-2xl" />
+        </div>
+        <Skeleton className="h-24 w-full rounded-[2rem]" />
+      </div>
+      <div className="space-y-6 rounded-[2.5rem] bg-gray-50/50 p-8">
+        <div className="flex justify-between items-center">
+          <div className="flex items-center gap-4">
+            <Skeleton className="w-12 h-12 rounded-2xl" />
+            <div className="space-y-2">
+              <Skeleton className="h-3 w-24" />
+              <Skeleton className="h-5 w-32" />
+            </div>
+          </div>
+          <Skeleton className="h-8 w-16" />
+        </div>
+        <div className="grid grid-cols-2 gap-10">
+          <div className="space-y-2">
+            <Skeleton className="h-3 w-24" />
+            <Skeleton className="h-8 w-20" />
+          </div>
+          <div className="space-y-2">
+            <Skeleton className="h-3 w-24" />
+            <Skeleton className="h-8 w-20" />
+          </div>
+        </div>
+      </div>
+      <Skeleton className="h-20 w-full rounded-[1.5rem]" />
+    </div>
+  );
+}

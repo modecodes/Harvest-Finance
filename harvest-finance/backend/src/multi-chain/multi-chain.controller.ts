@@ -18,7 +18,10 @@ import { MultiChainService } from './multi-chain.service';
 
 @ApiTags('Multi-chain')
 @ApiBearerAuth('JWT-auth')
-@Controller('api/v1/multi-chain')
+@Controller({
+  path: 'multi-chain',
+  version: '1',
+})
 @UseGuards(JwtAuthGuard)
 export class MultiChainController {
   constructor(private readonly service: MultiChainService) {}

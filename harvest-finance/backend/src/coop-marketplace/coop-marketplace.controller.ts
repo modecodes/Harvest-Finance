@@ -25,7 +25,10 @@ import { QueryListingsDto } from './dto/query-listings.dto';
 import { CoopOrderStatus } from '../database/entities/coop-order.entity';
 
 @ApiTags('coop-marketplace')
-@Controller('api/v1/marketplace')
+@Controller({
+  path: 'marketplace',
+  version: '1',
+})
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
 export class CoopMarketplaceController {

@@ -28,7 +28,10 @@ import { StellarChallengeDto, StellarVerifyDto, StellarAuthResponseDto, StellarC
 import { StellarStrategy } from './strategies/stellar.strategy';
 
 @ApiTags('Authentication')
-@Controller('api/v1/auth')
+@Controller({
+  path: 'auth',
+  version: '1',
+})
 export class AuthController {
   constructor(
     private readonly authService: AuthService,

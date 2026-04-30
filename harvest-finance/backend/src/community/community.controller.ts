@@ -24,7 +24,10 @@ import { QueryPostsDto } from './dto/query-posts.dto';
 import { ReactionType } from '../database/entities/post-reaction.entity';
 
 @ApiTags('community')
-@Controller('api/v1/community')
+@Controller({
+  path: 'community',
+  version: '1',
+})
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
 export class CommunityController {

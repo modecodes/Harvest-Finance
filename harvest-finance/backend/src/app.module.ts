@@ -5,6 +5,8 @@ import { APP_GUARD } from '@nestjs/core';
 import { ScheduleModule } from '@nestjs/schedule';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { buildThrottlerOptions } from './common/config/throttler.config';
@@ -128,6 +130,11 @@ import { CreateYieldAnalytics1700000000012 } from './database/migrations/1700000
         logging: configService.get<string>('NODE_ENV') === 'development',
       }),
       inject: [ConfigService],
+    }),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: true,
+      playground: true,
     }),
     CacheModule.register({ isGlobal: true, ttl: 600, max: 100 }),
     ScheduleModule.forRoot(),

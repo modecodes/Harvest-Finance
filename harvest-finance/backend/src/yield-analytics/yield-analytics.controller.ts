@@ -55,12 +55,12 @@ export class YieldAnalyticsController {
     const limit = query.limit || 50;
     const paginatedItems = analytics.slice(skip, skip + limit);
 
-return {
-       items: paginatedItems as any,
-       total: analytics.length,
-       skip,
-       limit,
-     };
+    return {
+      items: paginatedItems as any,
+      total: analytics.length,
+      skip,
+      limit,
+    };
   }
 
   @Get('current-apy')
@@ -99,12 +99,12 @@ return {
     const limit = query.limit || 50;
     const paginatedItems = analytics.slice(skip, skip + limit);
 
-return {
-       items: paginatedItems as any,
-       total: analytics.length,
-       skip,
-       limit,
-     };
+    return {
+      items: paginatedItems as any,
+      total: analytics.length,
+      skip,
+      limit,
+    };
   }
 
   @Post('process-hardwork-events')

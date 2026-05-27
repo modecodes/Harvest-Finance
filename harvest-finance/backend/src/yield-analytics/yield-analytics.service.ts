@@ -1,7 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Between, LessThanOrEqual, MoreThanOrEqual, Repository } from 'typeorm';
-import { SorobanEvent, SorobanEventType } from '../database/entities/soroban-event.entity';
+import {
+  SorobanEvent,
+  SorobanEventType,
+} from '../database/entities/soroban-event.entity';
 import { YieldAnalytics } from '../database/entities/yield-analytics.entity';
 
 export interface HardWorkEvent {

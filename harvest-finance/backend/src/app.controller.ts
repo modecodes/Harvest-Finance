@@ -9,7 +9,10 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  @ApiOkResponse({ type: AppStatusResponseDto, description: 'Application status message' })
+  @ApiOkResponse({
+    type: AppStatusResponseDto,
+    description: 'Application status message',
+  })
   getHello(): AppStatusResponseDto {
     return this.appService.getHello();
   }

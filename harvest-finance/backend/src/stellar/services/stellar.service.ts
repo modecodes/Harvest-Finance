@@ -1110,10 +1110,10 @@ export class StellarService implements OnModuleInit {
       StellarService.name,
     );
     this.logger.error(`Unexpected Stellar error in ${context}`, err);
-throw new InternalServerErrorException(
-       `Stellar network error in ${context}: ${err?.message ?? 'unknown'}`,
-     );
-   }
+    throw new InternalServerErrorException(
+      `Stellar network error in ${context}: ${err?.message ?? 'unknown'}`,
+    );
+  }
 
   /**
    * Submit a transaction with retry logic for better reliability.

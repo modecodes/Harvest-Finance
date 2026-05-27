@@ -22,7 +22,10 @@ export interface StellarPayload {
 }
 
 @Injectable()
-export class StellarStrategy extends PassportStrategy(StellarPlaceholderStrategy, 'stellar') {
+export class StellarStrategy extends PassportStrategy(
+  StellarPlaceholderStrategy,
+  'stellar',
+) {
   private readonly serverKeypair: StellarSdk.Keypair;
   private readonly networkPassphrase: string;
   private readonly challengeTimeout: number = 300; // 5 minutes
@@ -117,7 +120,7 @@ export class StellarStrategy extends PassportStrategy(StellarPlaceholderStrategy
       const clientPublicKey = transaction.operations[0].source as string;
 
       // Verify client signature
-this.verifyClientSignature(transaction, clientPublicKey);
+      this.verifyClientSignature(transaction, clientPublicKey);
 
       // Find or create user
       let user = await this.userRepository.findOne({

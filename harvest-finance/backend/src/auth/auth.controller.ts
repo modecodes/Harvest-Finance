@@ -24,6 +24,8 @@ import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
 import { AuthResponseDto, TokenResponseDto } from './dto/auth-response.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { RateLimit } from '../common/decorators/rate-limit.decorator';
+import { RateLimitGuard } from '../common/guards/rate-limit.guard';
 import {
   StellarChallengeDto,
   StellarVerifyDto,
@@ -132,9 +134,14 @@ export class AuthController {
 
   /**
    * Forgot password
+   *
+   * Uses `@RateLimit` (backed by `RateLimitGuard`) instead of the global
+   * throttler because password-reset is a high-value target for abuse and
+   * benefits from a stricter, per-user/IP window with a clear error message.
    */
   @Post('forgot-password')
-  @Throttle({ long: { limit: 5, ttl: 60000 } })
+  @UseGuards(RateLimitGuard)
+  @RateLimit({ limit: 5, ttl: 3600, message: 'Too many password reset requests. Please try again in 1 hour.' })
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Request password reset' })
   @ApiBody({ type: ForgotPasswordDto })
@@ -150,9 +157,13 @@ export class AuthController {
 
   /**
    * Reset password
+   *
+   * Uses `@RateLimit` to strictly cap token-consumption attempts and prevent
+   * brute-force attacks against short-lived reset tokens.
    */
   @Post('reset-password')
-  @Throttle({ long: { limit: 5, ttl: 60000 } })
+  @UseGuards(RateLimitGuard)
+  @RateLimit({ limit: 5, ttl: 3600, message: 'Too many password reset attempts. Please try again in 1 hour.' })
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Reset password with token' })
   @ApiBody({ type: ResetPasswordDto })

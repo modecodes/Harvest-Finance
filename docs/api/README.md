@@ -3,6 +3,9 @@
 Base URL: `http://localhost:5000/api/v1`  
 Interactive Swagger UI: `http://localhost:5000/api/docs`
 
+> **Adding a new endpoint?** Read the [API Versioning Guide](versioning.md) first.  
+> All routes must follow the URI versioning strategy (`/api/v{N}/resource`).
+
 ---
 
 ## Authentication

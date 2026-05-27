@@ -21,6 +21,7 @@ import {
   ReleasePaymentDto,
   RefundDto,
   SetupMultiSigDto,
+  StellarTransactionStatusDto,
 } from './dto/stellar.dto';
 import {
   DecodedHistoryPageDto,
@@ -172,7 +173,18 @@ export class StellarController {
     summary: 'Fetch the status of a Stellar transaction by hash',
   })
   @ApiParam({ name: 'hash', description: 'Transaction hash (hex)' })
-  async getTransaction(@Param('hash') hash: string) {
+  @ApiResponse({
+    status: 200,
+    description: 'Detailed transaction status',
+    type: StellarTransactionStatusDto,
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Invalid transaction hash or Stellar error',
+  })
+  async getTransaction(
+    @Param('hash') hash: string,
+  ): Promise<StellarTransactionStatusDto> {
     return this.stellarService.getTransactionStatus(hash);
   }
 

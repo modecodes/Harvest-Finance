@@ -125,3 +125,92 @@ export class SetupMultiSigDto {
   @IsNotEmpty()
   sourceSecretKey: string;
 }
+
+export class OperationRecordDto {
+  @ApiProperty({
+    example: 'payment',
+    description: 'The type of operation (e.g. payment, create_claimable_balance, etc.)',
+  })
+  @IsString()
+  type: string;
+
+  @ApiPropertyOptional({
+    example: 'GBUYER1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ234567ABCDEFGH',
+    description: 'Source account of the operation',
+  })
+  @IsString()
+  @IsOptional()
+  from?: string;
+
+  @ApiPropertyOptional({
+    example: 'GABCDEFGHIJKLMNOPQRSTUVWXYZ234567ABCDEFGHIJKLMNOPQRSTUVWX',
+    description: 'Destination account of the operation',
+  })
+  @IsString()
+  @IsOptional()
+  to?: string;
+
+  @ApiPropertyOptional({
+    example: '100.0000000',
+    description: 'Amount transferred in the operation',
+  })
+  @IsString()
+  @IsOptional()
+  amount?: string;
+
+  @ApiPropertyOptional({
+    example: 'USDC:GABCDEFGHIJKLMNOPQRSTUVWXYZ234567ABCDEFGHIJKLMNOPQRSTUVWX',
+    description: 'Asset identifier (e.g. XLM or CODE:ISSUER)',
+  })
+  @IsString()
+  @IsOptional()
+  asset?: string;
+}
+
+export class StellarTransactionStatusDto {
+  @ApiProperty({
+    example: '4c1143892809f6e622b07541604a8b75c3dbb9fa64dfbc8813a30eb6a58a74e5',
+    description: 'Hex-encoded Stellar transaction hash',
+  })
+  @IsString()
+  transactionHash: string;
+
+  @ApiProperty({
+    example: 'success',
+    enum: ['pending', 'success', 'failed'],
+    description: 'Current status of the transaction',
+  })
+  @IsString()
+  status: 'pending' | 'success' | 'failed';
+
+  @ApiPropertyOptional({
+    example: 456789,
+    description: 'Ledger sequence number in which the transaction was closed',
+  })
+  @IsNumber()
+  @IsOptional()
+  ledger?: number;
+
+  @ApiPropertyOptional({
+    example: '2026-05-27T12:00:00.000Z',
+    description: 'ISO 8601 UTC timestamp of transaction creation',
+  })
+  @IsOptional()
+  createdAt?: Date;
+
+  @ApiPropertyOptional({
+    example: '0.0000100',
+    description: 'Fee charged for the transaction in XLM',
+  })
+  @IsString()
+  @IsOptional()
+  fee?: string;
+
+  @ApiPropertyOptional({
+    type: [OperationRecordDto],
+    description: 'List of operations contained within the transaction',
+  })
+  @IsOptional()
+  operations?: OperationRecordDto[];
+}
+

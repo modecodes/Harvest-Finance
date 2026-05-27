@@ -1,8 +1,14 @@
 /**
  * API Versioning Configuration
  *
- * Manages API versions and deprecation schedules
- * Ensures frontend stability during backend updates
+ * Manages API versions and deprecation schedules.
+ * Ensures frontend stability during backend updates.
+ *
+ *   Before editing this file, read the versioning guide:
+ *    docs/api/versioning.md
+ *
+ * Strategy: URI versioning only — /api/v{N}/{resource}
+ * Header versioning is NOT used in this project.
  */
 
 export enum ApiVersionEnum {

@@ -103,9 +103,9 @@ export class ContractCacheService {
     this.logger.debug(`Batch cache invalidation: ${patterns.length} entries`);
   }
 
-/**
-    * Clear all cache (use sparingly)
-    */
+  /**
+   * Clear all cache (use sparingly)
+   */
   async clear(): Promise<void> {
     await this.cacheManager.clear();
     this.logger.warn('All cache cleared');

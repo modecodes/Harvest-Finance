@@ -282,7 +282,10 @@ export class SorobanIndexerService implements OnModuleInit {
    * Get the latest ledger from the Soroban RPC
    */
   async getLatestLedger(): Promise<number> {
-    const result = await this.rpcCall<{ sequence: number }>('getLatestLedger', {});
+    const result = await this.rpcCall<{ sequence: number }>(
+      'getLatestLedger',
+      {},
+    );
     return result.sequence;
   }
 
@@ -296,7 +299,9 @@ export class SorobanIndexerService implements OnModuleInit {
       return cached;
     }
 
-    const result = await this.rpcCall<{ entries: any[] }>('getLedgerEntries', { keys });
+    const result = await this.rpcCall<{ entries: any[] }>('getLedgerEntries', {
+      keys,
+    });
     await this.cacheManager.set(cacheKey, result, 60 * 1000);
     return result;
   }

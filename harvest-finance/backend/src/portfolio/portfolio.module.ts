@@ -8,6 +8,7 @@ import { StellarModule } from '../stellar/stellar.module';
 import { CommonModule } from '../common/common.module';
 import { PortfolioController } from './portfolio.controller';
 import { PortfolioService } from './portfolio.service';
+import { PortfolioResolver } from './portfolio.resolver';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { PortfolioService } from './portfolio.service';
     CommonModule,
   ],
   controllers: [PortfolioController],
-  providers: [PortfolioService],
+  providers: [PortfolioService, PortfolioResolver],
   exports: [PortfolioService],
 })
 export class PortfolioModule {}

@@ -13,6 +13,9 @@ import { BatchProcessorService } from './batch/batch-processor.service';
 import { InputSanitizerService } from './sanitization/input-sanitizer.service';
 import { RateLimitGuard } from './guards/rate-limit.guard';
 
+import { SecretsService } from './secrets/secrets.service';
+import { CustomLoggerService } from '../logger/custom-logger.service';
+
 @Module({
   providers: [
     VersionService,
@@ -20,6 +23,7 @@ import { RateLimitGuard } from './guards/rate-limit.guard';
     BatchProcessorService,
     InputSanitizerService,
     RateLimitGuard,
+    SecretsService,
   ],
   controllers: [VersionInfoController],
   exports: [
@@ -28,6 +32,7 @@ import { RateLimitGuard } from './guards/rate-limit.guard';
     BatchProcessorService,
     InputSanitizerService,
     RateLimitGuard,
+    SecretsService,
   ],
 })
 export class CommonModule {}

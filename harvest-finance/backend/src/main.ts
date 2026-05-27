@@ -59,7 +59,18 @@ async function bootstrap() {
         '## Conventions\n' +
         '- Collections expose `skip` / `limit` query parameters (limit is capped at 200).\n' +
         '- Monetary fields use 7-decimal strings to match Stellar precision.\n' +
-        '- All timestamps are ISO 8601 UTC.\n',
+        '- All timestamps are ISO 8601 UTC.\n\n' +
+        '## Errors\n' +
+        'All error responses return a consistent structure:\n' +
+        '```json\n' +
+        '{\n' +
+        '  "statusCode": 400,\n' +
+        '  "timestamp": "2026-05-27T11:17:55.000Z",\n' +
+        '  "path": "/api/v1/stellar/escrow",\n' +
+        '  "method": "POST",\n' +
+        '  "message": "Invalid Stellar public key format"\n' +
+        '}\n' +
+        '```\n',
     )
     .setVersion('1.0')
     .setContact(
